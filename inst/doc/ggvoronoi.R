@@ -3,6 +3,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(ggmap)
 
 ## ----1a------------------------------------------------------------------
 library(ggvoronoi)
@@ -40,36 +41,38 @@ ggplot(points,aes(x,y)) +
   theme_void() +
   coord_fixed()
 
-## ----2a,message=F--------------------------------------------------------
-library(ggmap)
+## ----2a,message=F,eval=F-------------------------------------------------
+#  library(ggmap)
+#  
+#  oxford_map <- get_googlemap(location = c(-84.7398373,39.507306),zoom = 15,key="your_api_key")
 
-ox_map <- get_map(location = c(-84.7398373,39.507306),zoom = 15)
-bounds <- as.numeric(attr(ox_map,"bb"))
+## ----2b,message=F--------------------------------------------------------
+bounds <- as.numeric(attr(oxford_map,"bb"))
 
 map <-
-  ggmap(ox_map,base_layer = ggplot(data=oxford_bikes,aes(x,y))) +
+  ggmap(oxford_map,base_layer = ggplot(data=oxford_bikes,aes(x,y))) +
         xlim(-85,-84)+ylim(39,40)+
         coord_map(ylim=bounds[c(1,3)],xlim=bounds[c(2,4)]) +
         theme_minimal() +
         theme(axis.text=element_blank(),
               axis.title=element_blank())
 
-## ----2b------------------------------------------------------------------
+## ----2c------------------------------------------------------------------
 map + geom_path(stat="voronoi",alpha=.085,size=.25) +
       geom_point(color="blue",size=.25)
 
-## ----2c------------------------------------------------------------------
+## ----2d------------------------------------------------------------------
 ox_diagram <- voronoi_polygon(oxford_bikes,x="x",y="y")
 
-## ----2d------------------------------------------------------------------
+## ----2e------------------------------------------------------------------
 library(sp)
 mac_joes <- SpatialPointsDataFrame(cbind(long=-84.7418,lat=39.5101),
                                    data=data.frame(name="Mac & Joes"))
 
-## ----2e------------------------------------------------------------------
+## ----2f------------------------------------------------------------------
 mac_joes %over% ox_diagram
 
-## ----2f,message=FALSE----------------------------------------------------
+## ----2g,message=FALSE----------------------------------------------------
 map + geom_path(data=fortify_voronoi(ox_diagram),aes(x,y,group=group),alpha=.1,size=1) +
       coord_map(xlim=c(-84.746,-84.739),ylim=c(39.508,39.514)) +
       geom_point(data=data.frame(mac_joes),aes(long,lat),color="red",size=2) +

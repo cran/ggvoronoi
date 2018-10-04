@@ -36,6 +36,11 @@ stat_voronoi <-
            inherit.aes = TRUE,
            outline = NULL,
            ...) {
+    if(is.null(mapping)){
+        mapping = aes(group=NA)
+    }else{
+        mapping$group=NA
+    }
     layer(
       stat = StatVoronoi,
       data = data,
@@ -67,5 +72,5 @@ StatVoronoi <- ggproto(
       data.frame = TRUE
     )
   },
-  default_aes = aes(fill = NA)
+  default_aes = aes(fill=NA,group=NA)
 )
