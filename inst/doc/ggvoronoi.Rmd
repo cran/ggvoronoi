@@ -104,12 +104,12 @@ but with high sample size or a small area on the globe ggvoronoi still produces 
 Our goal here is to use a Voronoi diagram to locate the closest bike rack to points of interest in Oxford, OH.
 Being the hometown of Miami University, there is a lot of bike traffic in Oxford.
 
-First we need to download a map of Oxford:
+First we need to download a map of Oxford, using the 'ggmap' package. Note to download this yourself, you will need to supply your a Google Maps API key. For convenience, the 'oxford_map' object has been saved as a data file in the package, so feel free to skip this step and move to the next block of code!
 
 ```{r 2a,message=F,eval=F}
 library(ggmap)
 
-oxford_map <- get_googlemap(location = c(-84.7398373,39.507306),zoom = 15,key="your_api_key")
+oxford_map <- get_googlemap(center = c(-84.7398373,39.507306),zoom = 15,key="your_api_key")
 ```
 
 Using this ggmap object we can make a map of Oxford in ggplot2. 
@@ -137,7 +137,7 @@ Here we can see each bike rack along with the Voronoi region surrounding it.
 So, given a bike rack, the region surrounding it is the area in Oxford for which that is the closest bike rack. 
 But what if we want to utilize this, not just look at it?
 
-Usng voronoi_polygon, we can build a Voronoi diagram as a SpatialPolygonsDataFrame.
+Using voronoi_polygon, we can build a Voronoi diagram as a SpatialPolygonsDataFrame.
 The voronoi_polygon function takes in:
 
 - data: a data frame (will need at least 2 numeric columns)
@@ -151,7 +151,7 @@ ox_diagram <- voronoi_polygon(oxford_bikes,x="x",y="y")
 
 This function is valuable in 2 cases: when there is spatial analysis to perform and when you are making a diagram of a large set of points.
 
-Now, lets take a point of interest in Oxford, say Mac & Joes, a popular restuarant/bar.
+Now, lets take a point of interest in Oxford, say Mac & Joes, a popular restaurant/bar.
 Google Maps can give us directions there, but there is no place to chain up a bike.
 So, lets use the diagram!
 
@@ -193,7 +193,7 @@ using the bike rack across High Street than the one on South Poplar.
 
 ## Example 3: Altitude of California
 
-Here, we will be demonstrating the heatmap capabilites of ggvoronoi. California has one of the most varied geographies of any US state. So, we'll use ggvoronoi to create a heatmap of the altitude of California!
+Here, we will be demonstrating the heatmap capabilities of ggvoronoi. California has one of the most varied geographies of any US state. So, we'll use ggvoronoi to create a heatmap of the altitude of California!
 
 First, subset out the data and outline.
 
@@ -236,7 +236,7 @@ cali_map +
 
 Here we can see everything from Death Valley (dark green) to Mount Whitney, the highest point in the state (dark brown)!
 
-In the second example, we used the voronoi_polygon function for spatial analysis. But, we'll repeat this third example using voronoi_polygon to demonstrate how to build a heatpmap using geom_polygon. This is useful when we have many points, as you only want to calculate the Voronoi regions once instead of each time you create a plot.
+In the second example, we used the voronoi_polygon function for spatial analysis. But, we'll repeat this third example using voronoi_polygon to demonstrate how to build a heatmap using geom_polygon. This is useful when we have many points, as you only want to calculate the Voronoi regions once instead of each time you create a plot.
 
 ```{r 3c}
 california <- map_data("state") %>% filter(region == "california")

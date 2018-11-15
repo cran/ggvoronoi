@@ -44,7 +44,7 @@ ggplot(points,aes(x,y)) +
 ## ----2a,message=F,eval=F-------------------------------------------------
 #  library(ggmap)
 #  
-#  oxford_map <- get_googlemap(location = c(-84.7398373,39.507306),zoom = 15,key="your_api_key")
+#  oxford_map <- get_googlemap(center = c(-84.7398373,39.507306),zoom = 15,key="your_api_key")
 
 ## ----2b,message=F--------------------------------------------------------
 bounds <- as.numeric(attr(oxford_map,"bb"))
