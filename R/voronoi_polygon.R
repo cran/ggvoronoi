@@ -1,11 +1,11 @@
 #' Voronoi Diagram from Data Frame
 #'
-#' Create a Voronoi diagram for analysis or plotting with geom_polygon.
-#' @param data data.frame containing a set of points to make voronoi regions and any additional desired columns.
+#' Create a Voronoi diagram for analysis or plotting with \code{\link[ggplot2]{geom_polygon}}.
+#' @param data \code{data.frame} containing a set of points to make voronoi regions and any additional desired columns.
 #' @param x numeric vector (for example longitude).
 #' @param y numeric vector (for example latitude).
-#' @param outline data.frame with first column x/longitude, second column y/latitude, and a group column denoting islands or pieces.
-#' @param data.frame output as data.frame? You will lose information if you do this. For use in StatVoronoi.
+#' @param outline \code{data.frame} with first column x/longitude, second column y/latitude, and a group column denoting islands or pieces.
+#' @param data.frame output as \code{data.frame}? You will lose information if you do this. For use in \code{\link[ggvoronoi]{StatVoronoi}}.
 #' @keywords voronoi, choropleth
 #' @import ggplot2 sp deldir rgeos raster
 #' @importFrom methods slot
@@ -28,7 +28,7 @@
 
 voronoi_polygon = function(data, x = 'x', y = 'y', outline = NULL, data.frame=FALSE)
 {
-  if(class(data) != "data.frame"){
+  if(!("data.frame" %in% class(data))){
     stop('"data" must be of class data.frame.')
   }
   if(nrow(data)==0){

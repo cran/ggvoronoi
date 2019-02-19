@@ -4,6 +4,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(ggmap)
+library(mapproj)
 
 ## ----1a------------------------------------------------------------------
 library(ggvoronoi)
