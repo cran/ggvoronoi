@@ -28,7 +28,7 @@
 
 voronoi_polygon = function(data, x = 'x', y = 'y', outline = NULL, data.frame=FALSE)
 {
-  if(!("data.frame" %in% class(data))){
+  if(class(data) != "data.frame"){
     stop('"data" must be of class data.frame.')
   }
   if(nrow(data)==0){

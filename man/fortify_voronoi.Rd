@@ -30,4 +30,4 @@ ggplot(vor_df) +
     geom_polygon(aes(x=x,y=y,fill=distance,group=group))
 }
 \keyword{choropleth}
-\keyword{voronoi,}
+\concept{voronoi}
