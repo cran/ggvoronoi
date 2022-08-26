@@ -9,6 +9,9 @@ fortify_voronoi(vor_spdf)
 \arguments{
 \item{vor_spdf}{Output from \code{\link[ggvoronoi]{voronoi_polygon}} (\code{\link[sp]{SpatialPolygonsDataFrame}})}
 }
+\value{
+A \code{data.frame} containing coordinates to trace the paths of the provided voronoi diagram.
+}
 \description{
 Allows output of \code{\link[ggvoronoi]{voronoi_polygon}} to be plotted using
 \code{\link[ggplot2]{geom_polygon}}.
@@ -29,5 +32,5 @@ vor_df <- fortify_voronoi(vor_spdf)
 ggplot(vor_df) +
     geom_polygon(aes(x=x,y=y,fill=distance,group=group))
 }
-\keyword{choropleth}
+\concept{choropleth}
 \concept{voronoi}
